@@ -5,8 +5,8 @@ import json
 app = Flask(__name__)
 api = Api(app)
 
-data = { "students": [
-    {
+data = [
+     {
         "Emanuel": {
             "hostname": "3.123.123.123"
         }
@@ -16,11 +16,7 @@ data = { "students": [
             "hostname": "231.213.123.23"
         }
     }
- ]
-}
-
-parser = reqparse.RequestParser()
-parser.add_argument('task')
+] 
 
 class StudentList(Resource):
     def get(self):
@@ -28,7 +24,9 @@ class StudentList(Resource):
         return data
     
     def post(self):
-        data['student'].append(request.data)
+        new_student = json.loads(request.data)
+        print(new_student)
+        data.append(new_student)
         return data, 201
 
 api.add_resource(StudentList, '/students')

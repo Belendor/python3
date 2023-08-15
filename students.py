@@ -1,20 +1,32 @@
 from flask import Flask, request
 from flask_restful import reqparse, abort, Resource, Api
+import json
 
 app = Flask(__name__)
 api = Api(app)
 
-myName = "Emanuel"
-myIP = '<Public-IP>'
-myFriend = '<IP>:<PORT>'
+data = { "students": [
+    {
+        "Emanuel": {
+            "hostname": "3.123.123.123"
+        }
+        },
+    {
+        "Emanuelina": {
+            "hostname": "231.213.123.23"
+        }
+    }
+ ]
+}
 
 class StudentList(Resource):
     def get(self):
         print('debug: sending full list')
-        return "OK"
+        return data
     
     def post(self):
-        return "Ok"
+        # data['student'].append(request.data)
+        return data, 201
 
 api.add_resource(StudentList, '/students')
 
